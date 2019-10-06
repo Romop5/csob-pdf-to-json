@@ -1,5 +1,7 @@
+#!/bin/python
 import re
 import json
+import argparse
 
 # Describes what kind a transaction can we extract.
 # A transaction must have a unique 'name' 
@@ -18,6 +20,10 @@ transactionTypes = [
                     "firstLineRegex": r"^Prijat"
                 }
             ]
+
+def eraseLines(transaction):
+    del transaction["lines"]
+    return transaction
 
 def detectTransactionType(firstLine):
     """Detects if current string line is the beginning of one of transaction types according to
@@ -73,13 +79,26 @@ class StatefullCSOBFilter:
 
 
 if __name__ == "__main__":
-    with open("output","r") as f:
+    parser = argparse.ArgumentParser(description='Converts CSOB text to JSON')
+    parser.add_argument('filename', metavar='N', type=str,
+                        help='file name for input file')
+    parser.add_argument('--keep-lines', action='store_true')
+
+    args = parser.parse_args()
+    fileName = (vars(args)["filename"])
+    shouldKeepLines = (vars(args))["keep_lines"]
+
+    with open(fileName,"r") as f:
         # Filter out all lines, not containing transaction info
         content = list(filter(StatefullCSOBFilter.filterMethod, f))
         # Group lines into transactions
         parsedTransaction = parseLinesToTransactions(content)
         # Extract semantic information from lines
         processedTransactions = list(map(processParsedTransaction, parsedTransaction))
+
+        if not shouldKeepLines:
+            print("erasing")
+            processedTransactions = map(eraseLines, processedTransactions)
 
         print(json.dumps(processedTransactions, indent=4))
 

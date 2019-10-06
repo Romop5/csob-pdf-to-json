@@ -1,7 +1,7 @@
 # ČSOB.sk Unofficial PDF to JSON transformer
 
 ## Requirements
-- pdfminer package (`pip install pdf2txt`)
+- pdfminer package (`pip install pdfminer`)
 
 ## Usage
 `pdf2txt.py exportFileName.pdf > output`

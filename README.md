@@ -4,8 +4,10 @@
 - pdfminer package (`pip install pdfminer`)
 
 ## Usage
-`pdf2txt.py exportFileName.pdf > output`
-`csob2json.py output > csob.json`
+```
+pdf2txt.py exportFileName.pdf > output
+csob2json.py output > csob.json
+```
 
 ## Known limitations
 Semantic is correctly parsed only for card payments.

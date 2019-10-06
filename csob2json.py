@@ -97,7 +97,6 @@ if __name__ == "__main__":
         processedTransactions = list(map(processParsedTransaction, parsedTransaction))
 
         if not shouldKeepLines:
-            print("erasing")
             processedTransactions = map(eraseLines, processedTransactions)
 
         print(json.dumps(processedTransactions, indent=4))

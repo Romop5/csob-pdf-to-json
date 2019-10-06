@@ -8,6 +8,12 @@
 pdf2txt.py exportFileName.pdf > output
 csob2json.py output > csob.json
 ```
+Options:
+- `--keep-lines`: keep original transaction lines (usefull for manual semantic parsing)
+
+## Output format
+
+- card transaction fields: *amount*, *place*
 
 ## Known limitations
 Semantic is correctly parsed only for card payments.
